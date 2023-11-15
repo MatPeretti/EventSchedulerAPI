@@ -13,25 +13,28 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class UserCreationDTO {
-    @NotBlank(message = "Username is required")
+    @NotBlank(message = "{requiredfield.username}")
     @Size(min = 3, max = 50, message = "{invalidformat.username}")
     private String username;
 
-    @NotBlank(message = "Password is required")
+    @NotBlank(message = "{requiredfield.password}")
     @Size(min = 6, message = "{invalidformat.password}")
     private String password;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email should be valid")
+    @NotBlank(message = "{requiredfield.email}")
+    @Email(message = "{invalidformat.email}")
     private String email;
 
-    @NotBlank(message = "Full name is required")
+    @NotBlank(message = "{requiredfield.fullname}")
     private String fullName;
 
+    @NotBlank(message= "{requiredfield.address}")
     private String address;
 
-    @Pattern(regexp = "^[+]*[(]?[0-9]{1,4}[)]?[-\\s\\./0-9]*$", message = "Invalid phone number")
+    @NotBlank(message = "{requiredfield.phonenumber}")
+    @Pattern(regexp = "^[+]*[(]?[0-9]{1,4}[)]?[-\\s\\./0-9]*$", message = "{invalidformat.phonenumber}")
     private String phoneNumber;
 
+    @NotBlank(message = "{requiredfield.userrole}")
     private Set<UserRole> roles;
 }

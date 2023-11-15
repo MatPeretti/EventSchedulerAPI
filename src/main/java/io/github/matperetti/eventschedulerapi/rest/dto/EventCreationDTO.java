@@ -10,32 +10,32 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class EventCreationDTO {
-    @NotBlank
-    @Size(max = 100)
+    @NotBlank(message = "{requiredfield.eventname}")
+    @Size(max = 100, message = "{invalidformat.eventname}")
     private String name;
 
-    @Size(max = 500)
+    @NotNull(message = "{requiredfield.description}")
+    @Size(max = 500, message = "{invalidformat.description}")
     private String description;
 
-    @NotNull
-    @FutureOrPresent
+    @NotNull(message = "{requiredfield.starttime}")
+    @FutureOrPresent(message = "{invalidformat.starttime}")
     private LocalDateTime startTime;
 
-    @NotNull
-    @FutureOrPresent
+    @NotNull(message = "{requiredfield.endtime}")
+    @FutureOrPresent(message = "{invalidformat.endtime}")
     private LocalDateTime endTime;
 
-    @NotBlank
+    @NotBlank(message = "{requiredfield.location}")
     private String location;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "{requiredfield.capacity}")
+    @Positive(message = "{invalidformat.capacity}")
     private Integer capacity;
 
-    @NotNull
+    @NotNull(message = "{requiredfield.status}")
     private EventStatus status;
 
-    @NotNull
+    @NotNull(message = "{requiredfield.userid}")
     private Long userId;
-
 }

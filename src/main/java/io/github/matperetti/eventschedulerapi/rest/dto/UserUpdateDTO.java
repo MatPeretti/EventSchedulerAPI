@@ -9,11 +9,13 @@ import javax.validation.constraints.Pattern;
 @Data
 @NoArgsConstructor
 public class UserUpdateDTO {
-    @NotBlank(message = "Full name is required")
+
+    @NotBlank(message = "{requiredfield.fullname}")
     private String fullName;
 
+    @NotBlank(message = "{requiredfield.address}")
     private String address;
 
-    @Pattern(regexp = "^[+]*[(]?[0-9]{1,4}[)]?[-\\s\\./0-9]*$", message = "Invalid phone number")
+    @Pattern(regexp = "^[+]*[(]?[0-9]{1,4}[)]?[-\\s\\./0-9]*$", message = "{invalidformat.phonenumber}")
     private String phoneNumber;
 }

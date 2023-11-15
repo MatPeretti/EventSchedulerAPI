@@ -6,34 +6,35 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 public class EventUpdateDTO {
-    @NotNull
+    @NotNull(message = "{requiredfield.id}")
     private Long id;
 
-    @NotBlank
-    @Size(max = 100)
+    @NotBlank(message = "{requiredfield.eventname}")
+    @Size(max = 100, message = "{invalidformat.eventName}")
     private String name;
 
-    @Size(max = 500)
+    @Size(max = 500, message = "{invalidformat.description}")
     private String description;
 
-    @NotNull
-    @FutureOrPresent
+    @NotNull(message = "{requiredfield.starttime}")
+    @FutureOrPresent(message = "{invalidformat.starttime}")
     private LocalDateTime startTime;
 
-    @NotNull
-    @FutureOrPresent
+    @NotNull(message = "{requiredfield.endtime}")
+    @FutureOrPresent(message = "{invalidformat.endtime}")
     private LocalDateTime endTime;
 
-    @NotBlank
+    @NotBlank(message = "{requiredfield.location}")
     private String location;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "{requiredfield.capacity}")
+    @Positive(message = "{invalidformat.capacity}")
     private Integer capacity;
 
-    @NotNull
+    @NotNull(message = "{requiredfield.status}")
     private EventStatus status;
 }

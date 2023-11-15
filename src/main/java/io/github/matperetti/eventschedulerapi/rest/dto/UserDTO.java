@@ -4,10 +4,6 @@ import io.github.matperetti.eventschedulerapi.domain.enums.UserRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Data
