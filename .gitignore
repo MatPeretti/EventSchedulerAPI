@@ -24,6 +24,9 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
+# Mac OS system files
+.DS_Store
+
 # IntelliJ IDEA
 .idea/
 *.iml
