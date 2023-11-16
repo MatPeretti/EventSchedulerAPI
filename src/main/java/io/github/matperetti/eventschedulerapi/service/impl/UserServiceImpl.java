@@ -2,6 +2,7 @@ package io.github.matperetti.eventschedulerapi.service.impl;
 
 import io.github.matperetti.eventschedulerapi.domain.entity.User;
 import io.github.matperetti.eventschedulerapi.domain.repository.UserRepository;
+import io.github.matperetti.eventschedulerapi.exception.EntityNotFound;
 import io.github.matperetti.eventschedulerapi.rest.dto.UserCreationDTO;
 import io.github.matperetti.eventschedulerapi.rest.dto.UserDTO;
 import io.github.matperetti.eventschedulerapi.rest.dto.UserUpdateDTO;
@@ -9,8 +10,6 @@ import io.github.matperetti.eventschedulerapi.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFound("User not found with id: " + id));
 
         return convertToDTO(user);
     }
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(Long id, UserUpdateDTO userUpdateDTO) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFound("User not found with id: " + id));
 
         updateUserData(user, userUpdateDTO);
 
@@ -76,7 +75,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
         } else {
-            throw new EntityNotFoundException("User not found with id: " + id);
+            throw new EntityNotFound("User not found with id: " + id);
         }
     }
 

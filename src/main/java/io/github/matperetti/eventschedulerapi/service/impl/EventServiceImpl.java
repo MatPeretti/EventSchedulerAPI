@@ -4,6 +4,7 @@ import io.github.matperetti.eventschedulerapi.domain.entity.Event;
 import io.github.matperetti.eventschedulerapi.domain.entity.User;
 import io.github.matperetti.eventschedulerapi.domain.repository.EventRepository;
 import io.github.matperetti.eventschedulerapi.domain.repository.UserRepository;
+import io.github.matperetti.eventschedulerapi.exception.EntityNotFound;
 import io.github.matperetti.eventschedulerapi.rest.dto.EventCreationDTO;
 import io.github.matperetti.eventschedulerapi.rest.dto.EventDTO;
 import io.github.matperetti.eventschedulerapi.rest.dto.EventUpdateDTO;
@@ -11,7 +12,6 @@ import io.github.matperetti.eventschedulerapi.service.EventService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +32,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventDTO getEventById(Long id) {
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Event not found with id " + id));
-        return convertToDTO(event);    }
+                .orElseThrow(() -> new EntityNotFound("Event not found with id " + id));
+        return convertToDTO(event);
+    }
 
     @Override
     public List<EventDTO> getAllEvents() {
@@ -45,7 +46,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventDTO updateEvent(Long id, EventUpdateDTO eventUpdateDTO) {
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Event not found with id " + id));
+                .orElseThrow(() -> new EntityNotFound("Event not found with id " + id));
 
         event.setName(eventUpdateDTO.getName());
         event.setDescription(eventUpdateDTO.getDescription());
@@ -94,11 +95,10 @@ public class EventServiceImpl implements EventService {
 
         if (dto.getUserId() != null) {
             User user = userRepository.findById(dto.getUserId())
-                    .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + dto.getUserId()));
+                    .orElseThrow(() -> new EntityNotFound("User not found with id: " + dto.getUserId()));
             event.setUser(user);
         }
 
         return event;
     }
-
 }

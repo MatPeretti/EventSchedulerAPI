@@ -4,10 +4,7 @@ import io.github.matperetti.eventschedulerapi.domain.enums.UserRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Set;
 
 @Data
@@ -35,6 +32,6 @@ public class UserCreationDTO {
     @Pattern(regexp = "^[+]*[(]?[0-9]{1,4}[)]?[-\\s\\./0-9]*$", message = "{invalidformat.phonenumber}")
     private String phoneNumber;
 
-    @NotBlank(message = "{requiredfield.userrole}")
+    @NotEmpty(message = "{requiredfield.userrole}")
     private Set<UserRole> roles;
 }
