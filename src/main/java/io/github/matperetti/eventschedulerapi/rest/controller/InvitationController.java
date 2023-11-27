@@ -1,5 +1,6 @@
 package io.github.matperetti.eventschedulerapi.rest.controller;
 
+import io.github.matperetti.eventschedulerapi.messaging.InvitationProducer;
 import io.github.matperetti.eventschedulerapi.rest.dto.InvitationCreationDTO;
 import io.github.matperetti.eventschedulerapi.rest.dto.InvitationDTO;
 import io.github.matperetti.eventschedulerapi.service.InvitationService;
@@ -17,10 +18,17 @@ public class InvitationController {
     @Autowired
     private InvitationService invitationService;
 
+    @Autowired
+    private InvitationProducer invitationProducer;
+
     @PostMapping("/events/{eventId}/invitations")
-    public ResponseEntity<InvitationDTO> sendInvitation(@PathVariable Long eventId, @RequestBody @Valid InvitationCreationDTO invitationCreationDTO) {
+    public ResponseEntity<InvitationDTO> sendInvitation(@PathVariable Long eventId,
+                                                        @RequestBody @Valid InvitationCreationDTO invitationCreationDTO) {
         invitationCreationDTO.setEventId(eventId);
         InvitationDTO invitation = invitationService.sendInvitation(invitationCreationDTO);
+
+        invitationProducer.sendInvitation(invitation); // Envie a mensagem para o RabbitMQ
+
         return ResponseEntity.ok(invitation);
     }
 
